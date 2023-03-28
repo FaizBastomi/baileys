@@ -20,28 +20,15 @@ import { generateMessageID } from './generics'
 const getTmpFilesDirectory = () => tmpdir()
 
 const getImageProcessingLibrary = async() => {
-	const [_jimp, sharp] = await Promise.all([
+	const [jimp] = await Promise.all([
 		(async() => {
 			const jimp = await (
 				import('jimp')
 					.catch(() => { })
 			)
 			return jimp
-		})(),
-		(async() => {
-			const sharp = await (
-				import('sharp')
-					.catch(() => { })
-			)
-			return sharp
 		})()
 	])
-
-	if(sharp) {
-		return { sharp }
-	}
-
-	const jimp = _jimp?.default || _jimp
 	if(jimp) {
 		return { jimp }
 	}
@@ -96,39 +83,20 @@ export const extractImageThumb = async(bufferOrFilePath: Readable | Buffer | str
 	}
 
 	const lib = await getImageProcessingLibrary()
-	if('sharp' in lib && typeof lib.sharp?.default === 'function') {
-		const img = lib.sharp!.default(bufferOrFilePath)
-		const dimensions = await img.metadata()
+	const { read, MIME_JPEG, RESIZE_BILINEAR, AUTO } = lib.jimp
 
-		const buffer = await img
-			.resize(width)
-			.jpeg({ quality: 50 })
-			.toBuffer()
-		return {
-			buffer,
-			original: {
-				width: dimensions.width,
-				height: dimensions.height,
-			},
-		}
-	} else if('jimp' in lib && typeof lib.jimp?.read === 'function') {
-		const { read, MIME_JPEG, RESIZE_BILINEAR, AUTO } = lib.jimp
-
-		const jimp = await read(bufferOrFilePath as any)
-		const dimensions = {
-			width: jimp.getWidth(),
-			height: jimp.getHeight()
-		}
-		const buffer = await jimp
-			.quality(50)
-			.resize(width, AUTO, RESIZE_BILINEAR)
-			.getBufferAsync(MIME_JPEG)
-		return {
-			buffer,
-			original: dimensions
-		}
-	} else {
-		throw new Boom('No image processing library available')
+	const jimp = await read(bufferOrFilePath as any)
+	const dimensions = {
+		width: jimp.getWidth(),
+		height: jimp.getHeight()
+	}
+	const buffer = await jimp
+		.quality(50)
+		.resize(width, AUTO, RESIZE_BILINEAR)
+		.getBufferAsync(MIME_JPEG)
+	return {
+		buffer,
+		original: dimensions
 	}
 }
 
@@ -141,7 +109,7 @@ export const encodeBase64EncodedStringForUpload = (b64: string) => (
 	)
 )
 
-export const generateProfilePicture = async(mediaUpload: WAMediaUpload) => {
+export const generateProfilePicture = async(mediaUpload: WAMediaUpload, type: 'noCrop' | 'noStretch' | undefined) => {
 	let bufferOrFilePath: Buffer | string
 	if(Buffer.isBuffer(mediaUpload)) {
 		bufferOrFilePath = mediaUpload
@@ -153,25 +121,31 @@ export const generateProfilePicture = async(mediaUpload: WAMediaUpload) => {
 
 	const lib = await getImageProcessingLibrary()
 	let img: Promise<Buffer>
-	if('sharp' in lib && typeof lib.sharp?.default === 'function') {
-		img = lib.sharp!.default(bufferOrFilePath)
-			.resize(640, 640)
-			.jpeg({
-				quality: 50,
-			})
-			.toBuffer()
-	} else if('jimp' in lib && typeof lib.jimp?.read === 'function') {
-		const { read, MIME_JPEG, RESIZE_BILINEAR } = lib.jimp
-		const jimp = await read(bufferOrFilePath as any)
+	let w = 640
+	let h = 640
+	const { read, MIME_JPEG, RESIZE_BILINEAR } = lib.jimp
+	const jimp = await read(bufferOrFilePath as any)
+	if(type === 'noCrop') {
+		if(jimp.getWidth() === jimp.getHeight()) {
+			w = 300
+			h = 700
+		} else if(jimp.getWidth() > jimp.getHeight()) {
+			w = 300
+			h = jimp.getHeight() / (jimp.getWidth() / 300)
+		} else if(jimp.getWidth() < jimp.getHeight()) {
+			h = 700
+			w = jimp.getWidth() / (jimp.getHeight() / 700)
+		}
+
+		jimp.resize(w, h)
+		img = jimp.getBufferAsync(MIME_JPEG)
+	} else if(type === 'noStretch') {
 		const min = Math.min(jimp.getWidth(), jimp.getHeight())
 		const cropped = jimp.crop(0, 0, min, min)
-
-		img = cropped
-			.quality(50)
-			.resize(640, 640, RESIZE_BILINEAR)
-			.getBufferAsync(MIME_JPEG)
+		img = cropped.quality(50).resize(640, 640, RESIZE_BILINEAR).getBufferAsync(MIME_JPEG)
 	} else {
-		throw new Boom('No image processing library available')
+		jimp.resize(w, h)
+		img = jimp.quality(50).getBufferAsync(MIME_JPEG)
 	}
 
 	return {

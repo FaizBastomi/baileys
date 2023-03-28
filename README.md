@@ -515,7 +515,7 @@ const sendMsg = await sock.sendMessage(id, templateMessage)
 	    - For groups, it must be in the format ``` 123456789-123345@g.us ```. 
     - For broadcast lists, it's `[timestamp of creation]@broadcast`.
     - For stories, the ID is `status@broadcast`.
-- For media messages, the thumbnail can be generated automatically for images & stickers provided you add `jimp` or `sharp` as a dependency in your project using `yarn add jimp` or `yarn add sharp`. Thumbnails for videos can also be generated automatically, though, you need to have `ffmpeg` installed on your system.
+- For media messages, the thumbnail can be generated automatically for images & stickers provided you add `jimp` as a dependency in your project using `yarn add jimp`. Thumbnails for videos can also be generated automatically, though, you need to have `ffmpeg` installed on your system.
 - **MiscGenerationOptions**: some extra info about the message. It can have the following __optional__ values:
     ``` ts
     const info: MessageOptions = {
