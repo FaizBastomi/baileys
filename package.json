@@ -18,8 +18,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "postinstall": "npm run prepare",
-    "prepare": "tsc",
+    "postinstall": "tsc",
     "build:all": "tsc && typedoc",
     "build:docs": "typedoc",
     "build:tsc": "tsc",
@@ -43,22 +42,6 @@
     "pino": "^7.0.0",
     "protobufjs": "^6.11.3",
     "ws": "^8.0.0"
-  },
-  "peerDependencies": {
-    "@adiwajshing/keyed-db": "^0.2.4",
-    "link-preview-js": "^3.0.0",
-    "qrcode-terminal": "^0.12.0"
-  },
-  "peerDependenciesMeta": {
-    "@adiwajshing/keyed-db": {
-      "optional": true
-    },
-    "qrcode-terminal": {
-      "optional": true
-    },
-    "link-preview-js": {
-      "optional": true
-    }
   },
   "files": [
     "lib/*",
