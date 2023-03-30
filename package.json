@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "postinstall": "npm run prepare",
     "prepare": "tsc",
     "build:all": "tsc && typedoc",
     "build:docs": "typedoc",
