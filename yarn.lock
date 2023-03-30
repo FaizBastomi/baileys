@@ -11,11 +11,6 @@
     eslint-plugin-react "^7.30.0"
     eslint-plugin-simple-import-sort "^7.0.0"
 
-"@adiwajshing/keyed-db@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@adiwajshing/keyed-db/-/keyed-db-0.2.4.tgz#2a09e88fce20b2672deb60a7750c5fe3ab0dfd99"
-  integrity sha512-yprSnAtj80/VKuDqRcFFLDYltoNV8tChNwFfIgcf6PGD4sjzWIBgs08pRuTqGH5mk5wgL6PBRSsMCZqtZwzFEw==
-
 "@ampproject/remapping@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -3481,10 +3476,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-link-preview-js@^3.0.0:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/link-preview-js/-/link-preview-js-3.0.4.tgz#1e053f80ee20ef50d03e6742dc30dc8487112653"
-  integrity sha512-xsuxMigAZd4xmj6BIwMNuQjjpJdh0DWeIo1NXQgaoWSi9Z/dzz/Kxy6vzzsUonFlMTPJ1i0EC8aeOg/xrOMidg==
+link-preview-js@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/link-preview-js/-/link-preview-js-3.0.0.tgz#daeba0d7e54ff97056ce670433358fe07d758973"
+  integrity sha512-gOFQARAtnyRK9FXyVvpFwTHLviDeLIi57b2AKiQmd/AnGy76hqnCmge6ilf8hTFuKJuEspzsxxzMgMRcrWS+ww==
   dependencies:
     abort-controller "^3.0.0"
     cheerio "1.0.0-rc.11"
@@ -4152,7 +4147,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-qrcode-terminal@^0.12.0:
+qrcode-terminal@0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz#bb5b699ef7f9f0505092a3748be4464fe71b5819"
   integrity sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==
