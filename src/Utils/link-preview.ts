@@ -50,6 +50,7 @@ export const getUrlInfo = async(
 
 		const info = await getLinkPreview(previewLink, {
 			...opts.fetchOpts,
+			followRedirects: 'follow',
 			headers: opts.fetchOpts as {}
 		})
 		if(info && 'title' in info && info.title) {
