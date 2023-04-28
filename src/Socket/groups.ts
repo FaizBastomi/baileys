@@ -264,6 +264,11 @@ export const extractGroupMetadata = (result: BinaryNode) => {
 	const eph = getBinaryNodeChild(group, 'ephemeral')?.attrs.expiration
 	const metadata: GroupMetadata = {
 		id: groupId,
+		community: {
+			parent: !!getBinaryNodeChild(group, 'parent'),
+			linkedId: getBinaryNodeChild(group, 'linked_parent')?.attrs.jid,
+			announcement: !!getBinaryNodeChild(group, 'announcement')
+		},
 		subject: group.attrs.subject,
 		subjectOwner: group.attrs.s_o,
 		subjectTime: +group.attrs.s_t,

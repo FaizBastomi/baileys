@@ -4,8 +4,17 @@ export type GroupParticipant = (Contact & { isAdmin?: boolean, isSuperAdmin?: bo
 
 export type ParticipantAction = 'add' | 'remove' | 'promote' | 'demote'
 
+export interface Community {
+    /** Parent group of community */
+    parent: boolean
+    /** Linked id of parent group community */
+    linkedId: string | undefined
+    /** Announcement group of community */
+    announcement: boolean
+}
 export interface GroupMetadata {
     id: string
+    community: Community
     owner: string | undefined
     subject: string
     /** group subject owner */
