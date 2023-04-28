@@ -253,6 +253,7 @@ export const makeGroupsSocket = (config: SocketConfig) => {
 export const extractGroupMetadata = (result: BinaryNode) => {
 	const group = getBinaryNodeChild(result, 'group')!
 	const descChild = getBinaryNodeChild(group, 'description')
+	const isCommunity = !!(getBinaryNodeChild(group, 'parent') || getBinaryNodeChild(group, 'linked_parent'))
 	let desc: string | undefined
 	let descId: string | undefined
 	if(descChild) {
@@ -264,9 +265,10 @@ export const extractGroupMetadata = (result: BinaryNode) => {
 	const eph = getBinaryNodeChild(group, 'ephemeral')?.attrs.expiration
 	const metadata: GroupMetadata = {
 		id: groupId,
+		isCommunity,
 		community: {
 			parent: !!getBinaryNodeChild(group, 'parent'),
-			linkedParent: getBinaryNodeChild(group, 'linked_parent')?.attrs.jid,
+			linkedParentId: getBinaryNodeChild(group, 'linked_parent')?.attrs.jid,
 			announcement: !!getBinaryNodeChild(group, 'announcement')
 		},
 		subject: group.attrs.subject,

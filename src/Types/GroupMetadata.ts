@@ -8,13 +8,14 @@ export interface Community {
     /** Parent group of community */
     parent: boolean
     /** Linked id of parent group community */
-    linkedParent: string | undefined
+    linkedParentId?: string | undefined
     /** Announcement group of community */
     announcement: boolean
 }
 export interface GroupMetadata {
     id: string
-    community: Community
+    isCommunity: boolean
+    community?: Community
     owner: string | undefined
     subject: string
     /** group subject owner */
