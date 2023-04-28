@@ -8,7 +8,7 @@ export interface Community {
     /** Parent group of community */
     parent: boolean
     /** Linked id of parent group community */
-    linkedId: string | undefined
+    linkedParent: string | undefined
     /** Announcement group of community */
     announcement: boolean
 }

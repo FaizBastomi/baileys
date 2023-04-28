@@ -266,7 +266,7 @@ export const extractGroupMetadata = (result: BinaryNode) => {
 		id: groupId,
 		community: {
 			parent: !!getBinaryNodeChild(group, 'parent'),
-			linkedId: getBinaryNodeChild(group, 'linked_parent')?.attrs.jid,
+			linkedParent: getBinaryNodeChild(group, 'linked_parent')?.attrs.jid,
 			announcement: !!getBinaryNodeChild(group, 'announcement')
 		},
 		subject: group.attrs.subject,
