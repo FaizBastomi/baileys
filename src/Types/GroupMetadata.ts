@@ -15,7 +15,7 @@ export interface Community {
 export interface GroupMetadata {
     id: string
     isCommunity: boolean
-    community?: Community
+    community?: Community | undefined
     owner: string | undefined
     subject: string
     /** group subject owner */
